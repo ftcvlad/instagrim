@@ -57,11 +57,10 @@ public final class CassandraHosts {
     }
 
     public static Cluster getCluster() {
-        System.out.println("getCluster");
-        cluster = Cluster.builder()
-                .addContactPoint(Host).build();
+       // System.out.println("getCluster");
+        cluster = Cluster.builder().addContactPoint(Host).build();
         getHosts(cluster);
-        Keyspaces.SetUpKeySpaces(cluster);
+        Keyspaces.SetUpKeySpaces(cluster);//??? why keySpaces are set EVERY time /Login;/Register servlet called
 
         return cluster;
 

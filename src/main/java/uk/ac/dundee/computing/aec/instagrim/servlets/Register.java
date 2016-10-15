@@ -28,23 +28,24 @@ public class Register extends HttpServlet {
     Cluster cluster=null;
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
+        
+       
         cluster = CassandraHosts.getCluster();
     }
 
 
 
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("WEB-INF/register.jsp").forward(request, response);
+    }
+    
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
+        
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         

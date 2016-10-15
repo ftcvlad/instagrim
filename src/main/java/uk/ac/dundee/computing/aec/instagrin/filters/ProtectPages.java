@@ -20,8 +20,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
 /**
  *
@@ -111,28 +111,34 @@ public class ProtectPages implements Filter {
         }
         
         doBeforeProcessing(request, response);
-        System.out.println("Doing filter");
+        
         HttpServletRequest httpReq = (HttpServletRequest) request;
+        HttpServletResponse httpResp = (HttpServletResponse) response;
         HttpSession session=httpReq.getSession(false);
-	LoggedIn li=(LoggedIn)session.getAttribute("LoggedIn");
-        System.out.println("Session in filter "+session);
-        if ((li == null)  || (li.getlogedin()==false)){
-               System.out.println("Foward to login");
-                RequestDispatcher rd=request.getRequestDispatcher("/login.jsp");
-		rd.forward(request,response);
+        
+         Throwable problem = null;
+        if (session == null || session.getAttribute("LoggedIn")==null){
 
-            
+             
+                httpResp.sendRedirect(httpReq.getContextPath()+"/Login");
+             
+             
         }
-        Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-	    // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
+        else{
+            try {
+                  System.out.println("AFTER FORWARDz bad bad");
+                  chain.doFilter(request, response);
+            } catch (Throwable t) {
+                  // If an exception is thrown somewhere down the filter chain,
+                  // we still want to execute our after processing, and then
+                  // rethrow the problem after that.
+                  problem = t;
+                  t.printStackTrace();
+            }
         }
+      
+       
+        
         
         doAfterProcessing(request, response);
 
@@ -217,7 +223,7 @@ public class ProtectPages implements Filter {
             } catch (Exception ex) {
             }
         } else {
-            try {
+            try {//??? but t's stack trace is null or empty???
                 PrintStream ps = new PrintStream(response.getOutputStream());
                 t.printStackTrace(ps);
                 ps.close();

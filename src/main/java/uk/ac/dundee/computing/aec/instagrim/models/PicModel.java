@@ -135,7 +135,7 @@ public class PicModel {
     public java.util.LinkedList<Pic> getPicsForUser(String User) {
         java.util.LinkedList<Pic> Pics = new java.util.LinkedList<>();
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("select picid from userpiclist where user =?");
+        PreparedStatement ps = session.prepare("select picid from userpiclist where user =?");//??? what if malicious changes link  Instagrim/images/otherUser 
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
         rs = session.execute( // this is where the query is executed

@@ -137,7 +137,7 @@ public class Image extends HttpServlet {
             HttpSession session=request.getSession();
             LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
             String username="majed";
-            if (lg.getlogedin()){
+            if (lg!=null){
                 username=lg.getUsername();
             }
             if (i > 0) {
@@ -163,6 +163,5 @@ public class Image extends HttpServlet {
         out.println("<h1>You have a na error in your input</h1>");
         out.println("<h2>" + mess + "</h2>");
         out.close();
-        return;
     }
 }

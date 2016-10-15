@@ -51,19 +51,16 @@ public final class Keyspaces {
                     + "  );";
             Session session = c.connect();
             try {
-                PreparedStatement statement = session
-                        .prepare(createkeyspace);
-                BoundStatement boundStatement = new BoundStatement(
-                        statement);
-                ResultSet rs = session
-                        .execute(boundStatement);
+                PreparedStatement statement = session.prepare(createkeyspace);
+                BoundStatement boundStatement = new BoundStatement(statement);
+                ResultSet rs = session.execute(boundStatement);
                 System.out.println("created instagrim ");
             } catch (Exception et) {
                 System.out.println("Can't create instagrim " + et);
             }
 
             //now add some column families 
-            System.out.println("" + CreatePicTable);
+            //System.out.println("" + CreatePicTable);
 
             try {
                 SimpleStatement cqlQuery = new SimpleStatement(CreatePicTable);
@@ -71,7 +68,7 @@ public final class Keyspaces {
             } catch (Exception et) {
                 System.out.println("Can't create tweet table " + et);
             }
-            System.out.println("" + Createuserpiclist);
+            //System.out.println("" + Createuserpiclist);
 
             try {
                 SimpleStatement cqlQuery = new SimpleStatement(Createuserpiclist);
@@ -79,14 +76,14 @@ public final class Keyspaces {
             } catch (Exception et) {
                 System.out.println("Can't create user pic list table " + et);
             }
-            System.out.println("" + CreateAddressType);
+            //System.out.println("" + CreateAddressType);
             try {
                 SimpleStatement cqlQuery = new SimpleStatement(CreateAddressType);
                 session.execute(cqlQuery);
             } catch (Exception et) {
                 System.out.println("Can't create Address type " + et);
             }
-            System.out.println("" + CreateUserProfile);
+            //System.out.println("" + CreateUserProfile);
             try {
                 SimpleStatement cqlQuery = new SimpleStatement(CreateUserProfile);
                 session.execute(cqlQuery);

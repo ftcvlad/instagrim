@@ -43,7 +43,7 @@ public class User {
         session.execute( // this is where the query is executed
                 boundStatement.bind( // here you are binding the 'boundStatement'
                         username,EncodedPassword));
-        //We are assuming this always works.  Also a transaction would be good here !
+        //We are assuming this always works.  Also a transaction would be good here !//??? doesn't check if username exists
         
         return true;
     }
@@ -65,7 +65,7 @@ public class User {
                 boundStatement.bind( // here you are binding the 'boundStatement'
                         username));
         if (rs.isExhausted()) {
-            System.out.println("No Images returned");
+            System.out.println("No Images returned");//???
             return false;
         } else {
             for (Row row : rs) {

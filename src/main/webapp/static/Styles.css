@@ -9,8 +9,18 @@ and open the template in the editor.
 */
 
 
-nav {
+/*nav {
     text-align: left;
     border: 2px;
     float: right;
+}*/
+
+.navbar li:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+.navbar a{
+    cursor:pointer;
 }
