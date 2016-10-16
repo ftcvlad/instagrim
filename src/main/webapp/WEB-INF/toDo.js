@@ -9,6 +9,7 @@
  * 1) if login exists, password updated
  * 2) using is.available() for determining byte array size is wrong (). Use Apache Commons-io instead
  * 3) close() on InputStream does nothing
+ * 4) filetypes other than image
  * 
  * 
  */

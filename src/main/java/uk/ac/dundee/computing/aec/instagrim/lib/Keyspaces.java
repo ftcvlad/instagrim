@@ -42,13 +42,15 @@ public final class Keyspaces {
                     + "      zip int\n"
                     + "  );";
             String CreateUserProfile = "CREATE TABLE if not exists instagrim.userprofiles (\n"
-                    + "      login text PRIMARY KEY,\n"
-                     + "     password text,\n"
-                    + "      first_name text,\n"
-                    + "      last_name text,\n"
-                    + "      email set<text>,\n"
+                    + "      login varchar PRIMARY KEY,\n"
+                    + "      password varchar,\n"
+                    + "      profilePicture blob,\n"
+                    + "      picType varchar,\n"
+                    + "      first_name varchar,\n"
+                    + "      last_name varchar,\n"
+                    + "      email varchar,\n"
+                    + "      status varchar,\n"
                     + "      addresses  map<text, frozen <address>>\n"
-                    + "      profilePicture blob"
                     + "  );";
             Session session = c.connect();
             try {
@@ -88,6 +90,7 @@ public final class Keyspaces {
             try {
                 SimpleStatement cqlQuery = new SimpleStatement(CreateUserProfile);
                 session.execute(cqlQuery);
+                System.out.println("USERORfiles is created!");
             } catch (Exception et) {
                 System.out.println("Can't create Address Profile " + et);
             }

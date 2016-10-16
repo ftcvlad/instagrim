@@ -12,6 +12,16 @@ html,body,#main{
     height: 100%;
 }
 
+#main{
+    display:flex;
+}
+
+
+.panel{
+    flex: 1 1 400px;
+    flex-direction:column;
+}
+
 .list-group{
     flex-basis: 236px;
     flex-grow:0;
@@ -21,9 +31,7 @@ html,body,#main{
     box-shadow:none;
 }
 
-#main{
-    display:flex;
-}
+
 
 #stuffContainer{
         display: flex;
@@ -35,7 +43,6 @@ html,body,#main{
         flex-grow:1;
 }
 
-.panel{
-    flex: 1 1 400px;
-    flex-direction:column;
+.alert{
+    margin-top:20px;
 }

@@ -22,23 +22,23 @@
          <div id="main">
              <div id="stuffContainer">
                     <div class="list-group">
-                        <a href="/Instagrim/Profile/View" class="list-group-item ">View Profile</a>
-                        <a href="/Instagrim/Profile/Edit" class="list-group-item active">Edit</a>
+                        <a href="${pageContext.request.contextPath}/Profile/View" class="list-group-item ">View Profile</a>
+                        <a href="${pageContext.request.contextPath}/Profile/Edit" class="list-group-item active">Edit</a>
 
                     </div>
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">HERE PIC and ${sessionScope.LoggedIn.getUsername()}</div>
+                        <div class="panel-heading">
+                            <img src="${pageContext.request.contextPath}/Profile/ProfilePicture"> 
+                            
+                            ${sessionScope.LoggedIn.getUsername()}
+                        
+                        
+                        </div>
                         <div class="panel-body">
-                            <form  method="POST" enctype="multipart/form-data" action="/Instagrim/Profile/Edit" >
+                            <form  method="POST" enctype="multipart/form-data" action="${pageContext.request.contextPath}/Profile/Edit" >
                                 
-                                <div class="form-group">
-                                  <label for="usernameInput">Username</label>
-                                  <input  class="form-control" id="usernameInput" name="newUsername" placeholder="30 characters max">
-                                </div>
-                                
-                                
-                                    
+                               
                                 <div class="form-group">
                                      <label for="usernameInput">First name</label>
                                     <input class="form-control" id="nameInput" name="firstname"  placeholder="30 characters max">
@@ -71,11 +71,35 @@
                                 <div class="form-group">
                                   <label for="exampleInputFile">Set profile picture</label>
                                   <input type="file" class="form-control-file" id="exampleInputFile" name="profilePic" aria-describedby="fileHelp">
-                                  <small id="fileHelp" class="form-text text-muted">Select your look!</small>
+                                  <small id="fileHelp" class="form-text text-muted">Select your look! .jpg .png .jpeg .gif accepted</small>
                                 </div>
                                
                               
                                 <button type="submit" class="btn btn-primary">Submit</button>
+                                
+                                <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+                                <c:if test="${updateSuccess != null}">
+                                    <c:choose>
+                                        <c:when test="${updateSuccess==true}">
+                                            <br/>
+                                            <div class="alert alert-success">
+                                                <strong>Success!</strong> Profile updated!
+                                            </div>
+                                        </c:when>    
+                                        <c:otherwise>
+                                            <br/>
+                                            <div class="alert alert-danger">
+                                                <strong>Error!</strong> Extension is not supported
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                
+                                </c:if>
+                                    
+                                    
+                                    
+                              
+                                
                             </form>
                         </div>
                     </div>

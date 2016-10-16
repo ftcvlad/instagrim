@@ -28,9 +28,12 @@
                     </div>
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">HERE PIC and username</div>
-                        <div class="panel-body">
-                          Panel content
+                        <div class="panel-heading">
+                            <img src="${pageContext.request.contextPath}/Profile/ProfilePicture"> 
+                            
+                            ${sessionScope.LoggedIn.getUsername()}
+                        
+                        
                         </div>
                     </div>
                  

@@ -25,6 +25,7 @@ import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.IOUtils;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
+import uk.ac.dundee.computing.aec.instagrim.lib.ExtValidator;
 import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
@@ -73,6 +74,7 @@ public class Image extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         String args[] = Convertors.SplitRequestPath(request);
+       
         int command;
         try {
             command = (Integer) CommandsMap.get(args[1]);
@@ -80,15 +82,21 @@ public class Image extends HttpServlet {
             error("Bad Operator", response);
             return;
         }
+        
+        
+        //System.out.println(args[0]+" "+args[1]+" "+args[2]);
+        //Instagrim Images koza
+        //Instagrim Thumb 5096fef0-93b7-11e6-b691-0a0027000003
+        //Instagrim Image 5096fef0-93b7-11e6-b691-0a0027000003
         switch (command) {
             case 1:
-                DisplayImage(Convertors.DISPLAY_PROCESSED,args[2], response);
+                DisplayImage(Convertors.DISPLAY_PROCESSED,args[2], response);// returns to img src
                 break;
             case 2:
-                DisplayImageList(args[2], request, response);
+                DisplayImageList(args[2], request, response);//Images create many "img src=\\\thumb"
                 break;
             case 3:
-                DisplayImage(Convertors.DISPLAY_THUMB,args[2],  response);
+                DisplayImage(Convertors.DISPLAY_THUMB,args[2],  response);//image printed to OutputStream
                 break;
             default:
                 error("Bad Operator", response);
@@ -110,11 +118,11 @@ public class Image extends HttpServlet {
         tm.setCluster(cluster);
   
         
-        Pic p = tm.getPic(type,java.util.UUID.fromString(Image));
+        Pic p = tm.getPic(type,java.util.UUID.fromString(Image));//type, ByteBuffer, length
         
         OutputStream out = response.getOutputStream();
 
-        response.setContentType(p.getType());
+        response.setContentType(p.getType());    
         response.setContentLength(p.getLength());
         //out.write(Image);
         InputStream is = new ByteArrayInputStream(p.getBytes());
@@ -127,29 +135,39 @@ public class Image extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        for (Part part : request.getParts()) {
+        for (Part part : request.getParts()) { 
             System.out.println("Part Name " + part.getName());
 
             String type = part.getContentType();
             String filename = part.getSubmittedFileName();
-            
+            System.out.println(type+" "+filename);
+             
+            if (!ExtValidator.validate(type, filename)){
+                 request.getRequestDispatcher("/upload.jsp").forward(request, response);
+                 return;
+            }
+             
             InputStream is = request.getPart(part.getName()).getInputStream();
            
            
             HttpSession session=request.getSession();
             LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
-            String username="majed";
+            String username="majed";//possibly have default user for not logged in users????
             if (lg!=null){
                 username=lg.getUsername();
             }
             
             byte[] bytes = IOUtils.toByteArray(is);
             
+            
+           
             if (bytes.length > 0) {
-                
+                System.out.println(type+" DAFUCK");
                 PicModel tm = new PicModel();
                 tm.setCluster(cluster);
                 tm.insertPic(bytes, type, filename, username);
+                
+                
             }
             RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
              rd.forward(request, response);

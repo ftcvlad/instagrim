@@ -62,6 +62,8 @@ public final class CassandraHosts {
         getHosts(cluster);
         Keyspaces.SetUpKeySpaces(cluster);//??? why keySpaces are set EVERY time /Login;/Register servlet called
 
+        
+        System.out.println("=================== SETUP ===================");
         return cluster;
 
     }

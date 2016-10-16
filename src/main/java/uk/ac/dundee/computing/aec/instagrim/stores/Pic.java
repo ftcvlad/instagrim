@@ -34,6 +34,12 @@ public class Pic {
         this.type=type;
     }
 
+    public void setPic(ByteBuffer bImage, String type) {
+        this.bImage = bImage;
+        this.type=type;
+    }
+    
+    
     public ByteBuffer getBuffer() {
         return bImage;
     }

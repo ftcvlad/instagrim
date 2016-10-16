@@ -13,10 +13,12 @@ import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
+import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 
 /**
@@ -96,12 +98,82 @@ public class User {
     }
     
     
-    public boolean editUserProfile(byte[] b, String firstName, String secondName, String username, String email, String status, String currentUsername){
+    public void editUserProfile(byte[] b, String type,String firstName, String secondName, String email, String status, String currentUsername){
         
-        // do some stuff here :)
-        //and b[] can be empty! if so, just don't update profilePic
-        return false;
+    
+        
+        Session session = cluster.connect("instagrim");
+        BoundStatement bs ;
+        if (b.length>0){
+            ByteBuffer buffer = ByteBuffer.wrap(b);
+            PreparedStatement ps = session.prepare("UPDATE instagrim.userprofiles "
+                + "SET first_name = ?,last_name=?,email=?,status=?, profilePicture=?, picType=?  WHERE login=?");
+            bs = new BoundStatement(ps);
+            bs.bind(firstName, secondName, email, status, buffer, type, currentUsername);
+        }
+        else{
+            
+            PreparedStatement ps = session.prepare("UPDATE instagrim.userprofiles "
+                + "SET first_name = ?,last_name=?,email=?,status=?,  WHERE login=?");
+            bs = new BoundStatement(ps);
+            bs.bind(firstName, secondName, email, status, currentUsername);
+        }
+        
+       
+        session.execute(bs);
+       
+         
+       
     }
+    
+    
+    public Map<String,String> getUserInfo(String username){
+        Session session = cluster.connect("instagrim");
+       
+         
+        PreparedStatement  ps = session.prepare("select first_name,last_name, status,email from userprofiles where login =?");
+        BoundStatement bs = new BoundStatement(ps);
+        bs.bind(username);
+        ResultSet rs = session.execute(bs);        
+        
+       
+        Row singleRow = rs.one();
+
+        
+        Map<String,String> map = new HashMap<String,String>();
+       
+        map.put("name",singleRow.getString("first_name") );
+        map.put("surname",singleRow.getString("last_name") );
+        map.put("email",singleRow.getString("email") );
+        map.put("status",singleRow.getString("status") );
+
+        return map;
+            
+            
+        
+  
+    }
+    
+    public Pic getProfilePicture(String username){
+
+          Session session = cluster.connect("instagrim");
+          PreparedStatement  ps = session.prepare("select profilePicture, picType from userprofiles where login =?");
+          BoundStatement bs = new BoundStatement(ps);
+          bs.bind(username);
+          
+          
+          ResultSet rs = session.execute(bs);        
+          Row singleRow = rs.one();
+          ByteBuffer bImage = singleRow.getBytes("profilePicture");
+          String type = singleRow.getString("picType");
+          
+          
+          Pic p = new Pic();
+          p.setPic(bImage,type );
+          return p;
+          
+          
+     }
     
     
     public void setCluster(Cluster cluster) {
