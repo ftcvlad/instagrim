@@ -5,7 +5,7 @@ $(function(){
 
 function logoutF(){
     
-    $.post("Logout",function(){
+    $.post("/Instagrim/Logout",function(){
         window.location  = "/Instagrim";
     });
     

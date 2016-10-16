@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Administrator
  */
-@WebFilter(filterName = "ProtectPages", urlPatterns = {"/upload.jsp"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.INCLUDE})
+@WebFilter(filterName = "ProtectPages",  dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.INCLUDE})
 public class ProtectPages implements Filter {
     
     private static final boolean debug = true;
@@ -126,7 +126,7 @@ public class ProtectPages implements Filter {
         }
         else{
             try {
-                  System.out.println("AFTER FORWARDz bad bad");
+                  
                   chain.doFilter(request, response);
             } catch (Throwable t) {
                   // If an exception is thrown somewhere down the filter chain,

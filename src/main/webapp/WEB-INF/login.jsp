@@ -22,7 +22,7 @@
 
                     <div id="login-form">
 
-                      <h3>Login</h3>
+                      <h3 id="loginHeader">Login</h3>
 
                       <fieldset>
 

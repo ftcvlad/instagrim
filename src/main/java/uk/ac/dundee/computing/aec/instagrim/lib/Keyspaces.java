@@ -48,6 +48,7 @@ public final class Keyspaces {
                     + "      last_name text,\n"
                     + "      email set<text>,\n"
                     + "      addresses  map<text, frozen <address>>\n"
+                    + "      profilePicture blob"
                     + "  );";
             Session session = c.connect();
             try {

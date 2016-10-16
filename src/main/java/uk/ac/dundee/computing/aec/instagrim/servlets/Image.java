@@ -22,6 +22,7 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.io.IOUtils;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
@@ -133,22 +134,22 @@ public class Image extends HttpServlet {
             String filename = part.getSubmittedFileName();
             
             InputStream is = request.getPart(part.getName()).getInputStream();
-            int i = is.available();
+           
+           
             HttpSession session=request.getSession();
             LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
             String username="majed";
             if (lg!=null){
                 username=lg.getUsername();
             }
-            if (i > 0) {
-                byte[] b = new byte[i + 1];
-                is.read(b);
-                System.out.println("Length : " + b.length);
+            
+            byte[] bytes = IOUtils.toByteArray(is);
+            
+            if (bytes.length > 0) {
+                
                 PicModel tm = new PicModel();
                 tm.setCluster(cluster);
-                tm.insertPic(b, type, filename, username);
-
-                is.close();
+                tm.insertPic(bytes, type, filename, username);
             }
             RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
              rd.forward(request, response);

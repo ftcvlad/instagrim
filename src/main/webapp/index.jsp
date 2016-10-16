@@ -14,7 +14,8 @@
        
          <%@ include file="WEB-INF/headSources.jsp" %>
         
-       
+        <link rel="stylesheet" type="text/css" href="static/Styles.css" />
+        <script src="static/javascript.js"></script>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
