@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +32,7 @@ public class ProfilePicture extends HttpServlet {
     private Cluster cluster;
 
     public void init(ServletConfig config) throws ServletException {
-            
+            super.init(config);
             cluster = CassandraHosts.getCluster();
     }
 
@@ -46,13 +47,14 @@ public class ProfilePicture extends HttpServlet {
             String username = ((LoggedIn) session.getAttribute("LoggedIn")).getUsername();
             User u = new User();
             u.setCluster(cluster);
-            Pic profilePic = u.getProfilePicture(username);
+            ServletContext context = getServletContext();
+            Pic profilePic = u.getProfilePicture(username, context);
 
             ByteBuffer bb = profilePic.getBuffer();
             byte[] picAsBytes = new byte[bb.remaining()];
             bb.get(picAsBytes);
 
-            System.out.println(profilePic.getType()+" "+picAsBytes.length+" ------------------------------=09");
+           
             
             response.setContentType(profilePic.getType());
             response.setContentLength(picAsBytes.length);

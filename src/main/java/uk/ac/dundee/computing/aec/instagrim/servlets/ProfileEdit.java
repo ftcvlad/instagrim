@@ -48,8 +48,8 @@ public class ProfileEdit extends HttpServlet {
             u.setCluster(cluster);
             Map<String,String> inputFieldValues = u.getUserInfo(username);
           
-        
-        //?????
+           System.out.println("   ========"+inputFieldValues.get("name"));
+            request.setAttribute("inputFieldValues",inputFieldValues);
         
           request.getRequestDispatcher("/WEB-INF/profileEdit.jsp").forward(request, response);
         

@@ -12,15 +12,30 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
+import org.imgscalr.Scalr;
+import static org.imgscalr.Scalr.OP_ANTIALIAS;
+import static org.imgscalr.Scalr.OP_GRAYSCALE;
+import static org.imgscalr.Scalr.resize;
+import static org.imgscalr.Scalr.crop;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
-import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
-
 /**
  *
  * @author Administrator
@@ -105,7 +120,14 @@ public class User {
         Session session = cluster.connect("instagrim");
         BoundStatement bs ;
         if (b.length>0){
-            ByteBuffer buffer = ByteBuffer.wrap(b);
+            
+            
+            byte[] resizedBytes = resizeForProfile(b, type.substring(type.lastIndexOf("/") + 1, type.length()));
+            
+            
+            
+            
+            ByteBuffer buffer = ByteBuffer.wrap(resizedBytes);
             PreparedStatement ps = session.prepare("UPDATE instagrim.userprofiles "
                 + "SET first_name = ?,last_name=?,email=?,status=?, profilePicture=?, picType=?  WHERE login=?");
             bs = new BoundStatement(ps);
@@ -141,20 +163,21 @@ public class User {
 
         
         Map<String,String> map = new HashMap<String,String>();
-       
-        map.put("name",singleRow.getString("first_name") );
-        map.put("surname",singleRow.getString("last_name") );
-        map.put("email",singleRow.getString("email") );
-        map.put("status",singleRow.getString("status") );
+        String name = singleRow.getString("first_name");
+        String surname = singleRow.getString("last_name");
+        String email = singleRow.getString("email");
+        String status = singleRow.getString("status");
+        
+        map.put("name", name==null?"":name);
+        map.put("surname",surname==null?"":surname );
+        map.put("email",email==null?"":email );
+        map.put("status",status==null?"":status);
 
         return map;
             
-            
-        
-  
     }
     
-    public Pic getProfilePicture(String username){
+    public Pic getProfilePicture(String username ,ServletContext context){
 
           Session session = cluster.connect("instagrim");
           PreparedStatement  ps = session.prepare("select profilePicture, picType from userprofiles where login =?");
@@ -168,12 +191,67 @@ public class User {
           String type = singleRow.getString("picType");
           
           
+          if (bImage==null){
+              type="image/png";//type
+              
+            
+              try {
+                  Path path = Paths.get(context.getRealPath("/static/images/nopic.png"));
+                  byte[] data = Files.readAllBytes(path);
+                  bImage = ByteBuffer.wrap(data);//buffer
+                  
+              } catch (IOException io) {
+                  System.out.println("*****BAD PATH*****");
+              }
+
+          }
+          
           Pic p = new Pic();
           p.setPic(bImage,type );
           return p;
           
           
      }
+    
+    public static byte[] resizeForProfile(byte[] b, String type){
+        InputStream in = new ByteArrayInputStream(b);
+        try{
+            BufferedImage bi = ImageIO.read(in);
+            
+            
+            //1) resize maintaining aspect to make image smaller side equal to squareSide
+            //2) crop from center of the longest side to get AxA square
+           
+            int squareSide = 150;
+            if(bi.getWidth()<bi.getHeight()){
+                 bi = Scalr.resize(bi, Scalr.Method.SPEED,Scalr.Mode.FIT_TO_WIDTH, squareSide,1, OP_ANTIALIAS);//1 is recalculated
+            }
+            else{
+                 bi = Scalr.resize(bi, Scalr.Method.SPEED,Scalr.Mode.FIT_TO_HEIGHT, 1,squareSide, OP_ANTIALIAS);//1 is recalculated
+            }
+            
+            if (bi.getWidth()<bi.getHeight()){
+                bi = Scalr.crop(bi,0,bi.getHeight()/2-squareSide/2,squareSide,squareSide);
+            }
+            else{
+                bi = Scalr.crop(bi,bi.getWidth()/2-squareSide/2,0,squareSide,squareSide);
+            }
+            
+            
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write( bi, type, baos );
+            baos.flush();
+            byte[] imageInByte = baos.toByteArray();
+            baos.close();
+            return imageInByte;
+        }
+        catch(IOException ioe){
+            return null;
+        }
+        
+        
+    }
+    
     
     
     public void setCluster(Cluster cluster) {

@@ -41,17 +41,17 @@
                                
                                 <div class="form-group">
                                      <label for="usernameInput">First name</label>
-                                    <input class="form-control" id="nameInput" name="firstname"  placeholder="30 characters max">
+                                    <input class="form-control" id="nameInput" name="firstname" value="${inputFieldValues.get("name")}" placeholder="30 characters max">
                                 </div>
                                 <div class="form-group">
                                       <label for="usernameInput">Second name</label>
-                                    <input  class="form-control" id="surnameInput" name="lastname"  placeholder="30 characters max">
+                                    <input  class="form-control" id="surnameInput" name="lastname" value="${inputFieldValues.get("surname")}" placeholder="30 characters max">
                                 </div>
                                
                                 
                                 <div class="form-group">
                                     <label for="emailInput">Email address</label>
-                                    <input type="email" class="form-control" id="emailInput" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                                    <input type="email" class="form-control" id="emailInput" name="email" aria-describedby="emailHelp" value="${inputFieldValues.get("email")}" placeholder="Enter email">
                                 </div>
                                 
                                 
@@ -66,7 +66,7 @@
                                
                                 <div class="form-group">
                                   <label for="exampleTextarea">Status</label>
-                                  <textarea class="form-control" id="exampleTextarea" name="status"  rows="2"></textarea>
+                                  <textarea class="form-control" id="exampleTextarea" name="status" rows="2">${inputFieldValues.get("status")}</textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="exampleInputFile">Set profile picture</label>
