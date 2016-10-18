@@ -162,7 +162,7 @@ public class Image extends HttpServlet {
           
            
             if (bytes.length > 0) {
-                System.out.println(type+" DAFUCK");
+                
                 PicModel tm = new PicModel();
                 tm.setCluster(cluster);
                 tm.insertPic(bytes, type, filename, username);

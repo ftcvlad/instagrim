@@ -11,9 +11,40 @@
         
         
         
-        var img = document.createElement("img");
-        img.src = contextPath+"/filters/"+document.querySelector('input[name="rate"]:checked').value;
+       
+    }
+    
+    function sendTofilter(contextPath) {
+        $("#errorDiv").hide();
+        var blobFile = document.getElementById("exampleInputFile").files[0];
+       
+       if (blobFile===undefined){
+           $("#errorDiv").html("<strong>Error!</strong> Select file")
+           $("#errorDiv").show();
+           
+       }
+       else{
+            var formData = new FormData();
+            formData.append("fileToUpload", blobFile);
 
-        var elem = document.getElementById("appendImage");
-        elem.appendChild(img);
+            $.ajax({
+               url: contextPath+"/filters/"+document.querySelector('input[name="filterName"]:checked').value,
+               type: "POST",
+               data: formData,
+               processData: false,
+               contentType: false,
+               success: function() {
+                    var img = document.createElement("img");
+                    img.src = contextPath+"/filters/getimage";
+
+                    var elem = document.getElementById("appendImage");
+                    elem.appendChild(img);
+               },
+               error: function(jqXHR, textStatus, errorMessage) {
+                   $("#errorDiv").html("<strong>Error!</strong>"+jqXHR.responseText)
+                   $("#errorDiv").show();
+               }
+            });
+       }
+       
     }

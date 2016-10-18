@@ -44,30 +44,52 @@
                         <div class="panel-body">
                             
 
-                              <form method="POST" enctype="multipart/form-data" action="${pageContext.request.contextPath}/Image">
-                                    <div class="form-group">
-                                      <label for="exampleInputFile">Upload picture</label>
-                                      <input type="file" class="form-control-file" id="exampleInputFile" name="upfile" aria-describedby="fileHelp">
-                                      <small id="fileHelp" class="form-text text-muted"> .jpg .png .jpeg .gif accepted</small>
-                                    </div>
+                             <div class="form-group">
+                                <label for="exampleInputFile">Upload picture</label>
+                                <input type="file" class="form-control-file" id="exampleInputFile"  aria-describedby="fileHelp">
+                                <small class="form-text text-muted"> .jpg .png .jpeg .gif accepted</small>
+                             </div>
 
+                            <div id="exTab2" class="container">	
+                                            <ul class="nav nav-tabs">
+                                                    <li class="active"><a  href="#1" data-toggle="tab">Upload</a></li>
+                                                    <li><a href="#2" data-toggle="tab">Filters</a></li>
 
-                                    <button type="submit" class="btn btn-primary">Upload</button>
-                              </form>
+                                            </ul>
 
-                                   
-                                    <div class="radio">
-                                        <label><input type="radio" name="filterName" value="original">Original</label>
-                                      </div>
-                                      <div class="radio">
-                                        <label><input type="radio" name="filterName" value="sepia">Sepia</label>
-                                    </div>
+                                            <div class="tab-content ">
+                                                        <div class="tab-pane active" id="1">
+<!--                                                            <form method="POST" enctype="multipart/form-data" action="${pageContext.request.contextPath}/Image">
+                                                                <br/>
+                                                           
+
+                                                                <button type="submit" class="btn btn-primary">Upload</button>
+                                                            </form>-->
+                                                        </div>
+                                                        <div class="tab-pane" id="2">
+                                                                <br/>
+                                                                <div class="alert alert-danger" id="errorDiv" style="display: none;">
+                                                                    <strong>Error!</strong> 
+                                                                </div>
+                                                                <div class="radio">
+                                                                    <label><input type="radio" name="filterName" value="original">Original</label>
+                                                                </div>
+                                                                <div class="radio" >
+                                                                    <label><input type="radio" name="filterName" checked="checked" value="sepia">Sepia</label>
+                                                                </div>
+
+                                                                <button type="button" class="btn btn-primary" onclick="sendTofilter('${pageContext.request.contextPath}')">View image</button>
+                                                                <br/>
+
+                                                                <div id="appendImage"></div>    
+                                                        </div>
+
+                                            </div>
+                              </div>
                                     
-                                    <button type="button" class="btn btn-primary" onclick="doStuff(${pageContext.request.contextPath})">View image</button>
-                                    <br/>
                                     
-                                    <div id="appendImage"></div>    
-                             
+                                    
+                                    
                         </div>
                            
                     </div>

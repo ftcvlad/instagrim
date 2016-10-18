@@ -14,7 +14,7 @@
  * 
  */
 
-//http://stackoverflow.com/questions/1164043/maven-how-to-include-jars-which-are-not-available-in-reps-into-a-j2ee-project
+//http://stackoverflow.com/questions/2229757/maven-add-a-dependency-to-a-jar-by-relative-path
 //add non-maven central .jar to local repository available for builds!
 
 

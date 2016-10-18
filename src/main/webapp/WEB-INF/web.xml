@@ -26,6 +26,11 @@ and open the template in the editor.
         <filter-name>ProtectPages</filter-name>
         <url-pattern>/Profile/*</url-pattern>
     </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>ProtectPages</filter-name>
+        <url-pattern>/filters/*</url-pattern>
+    </filter-mapping>
 
 
 </web-app>
