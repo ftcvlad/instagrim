@@ -8,6 +8,7 @@ package uk.ac.dundee.computing.aec.instagrim.servlets;
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -80,7 +81,14 @@ public class ProfileEdit extends HttpServlet {
             String filename = filePart.getSubmittedFileName();
             
              
-            if (!ExtValidator.validate(type, filename)){
+            Map<String,String> inputFieldValues =new HashMap<>();
+            inputFieldValues.put("name", firstname);
+            inputFieldValues.put("surname", secondname);
+            inputFieldValues.put("status", status);
+            inputFieldValues.put("email", email);
+            request.setAttribute("inputFieldValues", inputFieldValues);
+            
+            if (!filename.equals("") && !ExtValidator.validate(type, filename)){
                  request.setAttribute("updateSuccess", false); 
                  request.getRequestDispatcher("/WEB-INF/profileEdit.jsp").forward(request, response);
                  return;
@@ -95,6 +103,8 @@ public class ProfileEdit extends HttpServlet {
             User u = new User();
             u.setCluster(cluster);
             u.editUserProfile(bytes,type, firstname, secondname, email,status,currentUsername);
+            
+            
             
             
             request.setAttribute("updateSuccess", true); 

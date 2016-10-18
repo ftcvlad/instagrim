@@ -51,7 +51,7 @@
                             String UserName = lg.getUsername();
                           
                     %>
-                <li><a href="/Instagrim/Profile/View">Profile</a></li>
+                <li><a href="/Instagrim/Profile/Upload">Profile</a></li>
                 <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
                 <li><a><span onclick="logoutF();">Logout</span></a></li>
                     <%

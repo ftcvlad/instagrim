@@ -25,15 +25,6 @@
         
         
 
-        
-        <nav>
-            <ul>
-
-               
-                <li><a href="upload.jsp">Upload</a></li>
-                  
-            </ul>
-        </nav>
        
     </body>
 </html>

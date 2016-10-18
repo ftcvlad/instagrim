@@ -152,14 +152,14 @@ public class Image extends HttpServlet {
            
             HttpSession session=request.getSession();
             LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
-            String username="majed";//possibly have default user for not logged in users????
+            String username = null;
             if (lg!=null){
                 username=lg.getUsername();
             }
             
             byte[] bytes = IOUtils.toByteArray(is);
             
-            
+          
            
             if (bytes.length > 0) {
                 System.out.println(type+" DAFUCK");

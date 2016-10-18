@@ -17,29 +17,22 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author vladislavvoicehovic
  */
-@WebServlet(name = "ProfileUpload", urlPatterns = {"/Profile/Upload"})
-public class Profile extends HttpServlet {
+@WebServlet(name = "imageFilter", urlPatterns = {"/filters/*"})
+public class ImageFilter extends HttpServlet {
 
-  
+ 
 
-   
+ 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
         
         
-
-          request.getRequestDispatcher("/WEB-INF/profileUploadImage.jsp").forward(request, response);
-        
-        
+        System.out.println("good stuff");
     }
 
-  
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    }
+   
 
     /**
      * Returns a short description of the servlet.

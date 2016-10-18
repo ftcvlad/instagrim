@@ -136,7 +136,7 @@ public class User {
         else{
             
             PreparedStatement ps = session.prepare("UPDATE instagrim.userprofiles "
-                + "SET first_name = ?,last_name=?,email=?,status=?,  WHERE login=?");
+                + "SET first_name = ?,last_name=?,email=?,status=?  WHERE login=?");
             bs = new BoundStatement(ps);
             bs.bind(firstName, secondName, email, status, currentUsername);
         }

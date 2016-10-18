@@ -13,36 +13,65 @@ html,body,#main{
 }
 
 #main{
-    display:flex;
+   
 }
 
-
-.panel{
-    flex: 1 1 400px;
-    flex-direction:column;
+#stuffContainer{
+        display: flex;
+       
+        padding:20px;
+        max-width: 1000px;
+        margin: 0px auto 0;
+        flex-direction: row;
+       
 }
 
 .list-group{
-    flex-basis: 236px;
-    flex-grow:0;
-    flex-shrink:0;
+    flex: 0 0 170px;/*grow shrink basis*/
     border-right: 1px solid #dbdbdb;
     border: 0;
     box-shadow:none;
 }
 
-
-
-#stuffContainer{
-        display: flex;
-        flex-shrink: 0;
-        padding:20px;
-        max-width: 1000px;
-        margin: 0px auto 0;
-        flex-direction: row;
-        flex-grow:1;
+.panel{
+    flex: 1 1 auto;
+    flex-direction:column;
+    display: flex;
 }
+
+
+.panel-heading{
+    display:flex;
+    flex: 0 0 auto;
+}
+
+.panel-body{
+    flex: 1 1 auto;
+}
+
+
+
+
+
+/*page layout upstairs*/
 
 .alert{
     margin-top:20px;
 }
+
+
+#profileInfo h1{
+   
+    font-family:cursive;
+}
+
+#profileInfo h2{
+    font-family: monospace;
+    FONT-WEIGHT: bold;
+    font-size: 17px;
+}
+
+#profileInfo p, h1, h2{
+    margin-left:20px;
+}
+
