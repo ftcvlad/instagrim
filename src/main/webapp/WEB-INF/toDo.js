@@ -14,7 +14,12 @@
  * 
  */
 
+//http://stackoverflow.com/questions/1164043/maven-how-to-include-jars-which-are-not-available-in-reps-into-a-j2ee-project
+//add non-maven central .jar to local repository available for builds!
 
+
+//http://stackoverflow.com/questions/4323981/how-to-install-jars-in-maven-repository-which-is-eclipse-embedded
+//fucking eclipse
 /*
  * 1) add Bootstrap badge -- number of commetns per user in a list!
  * 
