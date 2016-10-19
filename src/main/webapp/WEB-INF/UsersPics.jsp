@@ -12,92 +12,87 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Instagrim</title>
-        <%@ include file="WEB-INF/headSources.jsp" %>
+        <%@ include file="headSources.jsp" %>
          <link rel="stylesheet" type="text/css" href="../static/Styles.css" />
-
+        <link rel="stylesheet" type="text/css" href="../static/profileStyle.css" />
+        <link rel="stylesheet" type="text/css" href="../static/viewThumbnails.css" />
         <script src="../static/javascript.js"></script>
     </head>
     <body>
         
-         <%@ include file="WEB-INF/bootHeader.jsp" %>
+         <%@ include file="bootHeader.jsp" %>
         
  
-<!--        <article>
-            <h1>Your Pics</h1>
-        <%
-            java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
-            if (lsPics == null) {
-        %>
-        <p>No Pictures found</p>
-        <%
-        } else {
-            Iterator<Pic> iterator;
-            iterator = lsPics.iterator();
-            while (iterator.hasNext()) {
-                Pic p = (Pic) iterator.next();
 
-        %>
-        <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a><br/><%
-
-            }
-            }
-        %>
-        </article>-->
         
         
         <div id="main">
             <div id="stuffContainer">
 
                  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-                    <c:if test="${updateSuccess != null}">
+                   
                         <c:choose>
-                            <c:when test="${userInfo==true}">
+                            <c:when test="${userInfo==null}">
 
                                 <div class="alert alert-danger">
                                     <strong>Error!</strong> User does not exist
                                 </div>
                             </c:when>    
                             <c:otherwise>
-                                <div class="panel-heading">
-                                    <div><img src="${pageContext.request.contextPath}/ProfilePicture/${userInfo.get("username")}"> </div>
+                                
+                                <div class="panel panel-default">
 
-                                    <div id="profileInfo">
-                                        <h1>${userInfo.get("username")}</h1>
-                                        <h2>${userInfo.get("name")} ${userInfo.get("surname")}</h2>
-                                        <p>${userInfo.get("status")}</p>
-                                    </div>
+                                    <div class="panel-heading">
+                                        <div><img src="${pageContext.request.contextPath}/ProfilePicture/${userInfo.get("username")}"> </div>
 
-
-
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-xs-6 col-md-3">
-                                            <a href="#" class="thumbnail">
-                                                <img src="/Instagrim/static/images/nopic.png" >
-                                            </a>
-                                            <a href="#" class="thumbnail">
-                                                <img src="/Instagrim/static/images/nopic.png" >
-                                            </a>
-
-                                        </div>
-                                        <div class="col-xs-3 col-md-1">
-                                            <a href="#" class="thumbnail">
-                                                <img src="/Instagrim/static/images/nopic.png" >
-                                            </a>
-                                            <a href="#" class="thumbnail">
-                                                <img src="/Instagrim/static/images/nopic.png" >
-                                            </a>
-
+                                        <div id="profileInfo">
+                                            <h1>${userInfo.get("username")}</h1>
+                                            <h2>${userInfo.get("name")} ${userInfo.get("surname")}</h2>
+                                            <p>${userInfo.get("status")}</p>
                                         </div>
 
+
+
+                                    </div>
+                                    <div class="panel-body">
+                                        
+                                        
+                                        <c:set var="lsPics" value="${Pics}"/>                                
+        
+        
+                                        <c:choose>
+                                            <c:when test="${lsPics==null}">
+                                                Current user has no pictures
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="container-fluid">
+                                                    <div class="row">
+
+                                                            <c:forEach items="${lsPics}" var="nextPic"> 
+                                                                 <div class="col-xs-4 col-md-4">
+                                                                     <a href="/Instagrim/Image/${nextPic.getSUUID()}" class="thumbnail"><img src="/Instagrim/Thumb/${nextPic.getSUUID()}" ></a>
+
+                                                                </div>
+
+                                                            </c:forEach>
+
+
+                                                    </div>
+                                                </div>
+                                            </c:otherwise>
+                                            
+                                        </c:choose>   
+                                            
+                                        
+
+                                        
+                                        
                                     </div>
                                 </div>
-
                             </c:otherwise>
                         </c:choose>
 
-                    </c:if>
+                   
                 
                 
                 
@@ -110,30 +105,8 @@
     </div>
 
         
+   
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-        
-        
-        
-        <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
-        </footer>
+       
     </body>
 </html>

@@ -14,12 +14,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
-    <repositories>
+<!--    <repositories>
         <repository>
           <id>localMarvin</id>
           <url>file://${project.basedir}/src/main/resources/local</url>
         </repository>
-    </repositories>
+    </repositories>-->
     
     
     <dependencies>

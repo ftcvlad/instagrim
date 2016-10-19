@@ -15,7 +15,9 @@ public class ExtValidator {
     
     public static boolean validate(String type, String filename){
         
-                 
+        type = type.toLowerCase();  
+        
+        System.out.println("------------>"+type);
         String[] possibleContentTypes = {"image/jpeg", "image/jpg","image/gif","image/png" };   
         String[] possibleExtensions = {"jpg","png","jpeg","gif"};
         

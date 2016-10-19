@@ -97,13 +97,8 @@ public class PicModel {
     public byte[] picresize(String picid,String type) {
         try {
             BufferedImage BI = ImageIO.read(new File("/var/tmp/instagrim/" + picid));
-            BufferedImage thumbnail = createThumbnail(BI);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(thumbnail, type, baos);
-            baos.flush();
+            byte[] imageInByte = createThumbnail(BI, type);
             
-            byte[] imageInByte = baos.toByteArray();
-            baos.close();
             return imageInByte;
         } catch (IOException et) {
 
@@ -127,10 +122,11 @@ public class PicModel {
         return null;
     }
 
-    public static BufferedImage createThumbnail(BufferedImage img) {
-        img = resize(img, Method.SPEED, 250, OP_ANTIALIAS, OP_GRAYSCALE);
-        // Let's add a little border before we return result.
-        return pad(img, 2);
+    public static byte[] createThumbnail(BufferedImage img, String type) {
+        //img = resize(img, Method.SPEED, 250, OP_ANTIALIAS, OP_GRAYSCALE);
+        return ImageResizer.resizeToSquare(img, type, 300);
+
+       
     }
     
    public static BufferedImage createProcessed(BufferedImage img) {

@@ -44,7 +44,7 @@ public class Image extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Cluster cluster;
-    private HashMap CommandsMap = new HashMap();
+    private final HashMap CommandsMap = new HashMap();
     
     
 
@@ -60,6 +60,7 @@ public class Image extends HttpServlet {
 
     }
 
+    @Override
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
@@ -69,10 +70,17 @@ public class Image extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         String args[] = Convertors.SplitRequestPath(request);
        
+        
+        for (String s: args){
+            System.out.print(s+" ");
+            
+        }
+        System.out.println();
         int command;
         try {
             command = (Integer) CommandsMap.get(args[1]);
@@ -114,10 +122,12 @@ public class Image extends HttpServlet {
         Map<String,String> userInfo = u.getUserInfo(username);
         request.setAttribute("userInfo", userInfo);
         
-        System.out.println("ne dumaja");
+        System.out.println("ne dumaja SUKA");
         
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/UsersPics.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/UsersPics.jsp");
         rd.forward(request, response);
+        
+     
 
     }
 
@@ -127,21 +137,20 @@ public class Image extends HttpServlet {
   
         
         Pic p = tm.getPic(type,java.util.UUID.fromString(Image));//type, ByteBuffer, length
-        
-        OutputStream out = response.getOutputStream();
-
-        response.setContentType(p.getType());    
-        response.setContentLength(p.getLength());
-        //out.write(Image);
-        InputStream is = new ByteArrayInputStream(p.getBytes());
-        BufferedInputStream input = new BufferedInputStream(is);
-        byte[] buffer = new byte[8192];
-        for (int length = 0; (length = input.read(buffer)) > 0;) {
-            out.write(buffer, 0, length);
+        try (OutputStream out = response.getOutputStream()) {
+            response.setContentType(p.getType());
+            response.setContentLength(p.getLength());
+            //out.write(Image);
+            InputStream is = new ByteArrayInputStream(p.getBytes());
+            BufferedInputStream input = new BufferedInputStream(is);
+            byte[] buffer = new byte[8192];
+            for (int length ; (length = input.read(buffer)) > 0;) {
+                out.write(buffer, 0, length);
+            }
         }
-        out.close();
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         for (Part part : request.getParts()) { 
            
@@ -150,7 +159,11 @@ public class Image extends HttpServlet {
             String filename = part.getSubmittedFileName();
            
              
+            
+            
             if (!ExtValidator.validate(type, filename)){
+                
+                
                 response.setContentType("text/plain");
                 response.setStatus(400);
                 response.getWriter().write("Selected file extension is not accepted!");
@@ -186,10 +199,9 @@ public class Image extends HttpServlet {
 
     private void error(String mess, HttpServletResponse response) throws ServletException, IOException {
 
-        PrintWriter out = null;
-        out = new PrintWriter(response.getOutputStream());
-        out.println("<h1>You have a na error in your input</h1>");
-        out.println("<h2>" + mess + "</h2>");
-        out.close();
+        try (PrintWriter out = new PrintWriter(response.getOutputStream())) {
+            out.println("<h1>You have a na error in your input</h1>");
+            out.println("<h2>" + mess + "</h2>");
+        }
     }
 }

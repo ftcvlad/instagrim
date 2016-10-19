@@ -14,7 +14,6 @@ import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -29,12 +28,8 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
-import org.imgscalr.Scalr;
-import static org.imgscalr.Scalr.OP_ANTIALIAS;
-import static org.imgscalr.Scalr.OP_GRAYSCALE;
-import static org.imgscalr.Scalr.resize;
-import static org.imgscalr.Scalr.crop;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
+import uk.ac.dundee.computing.aec.instagrim.lib.ImageResizer;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 /**
  *
@@ -118,12 +113,15 @@ public class User {
         Session session = cluster.connect("instagrim");
         BoundStatement bs ;
         if (b.length>0){
+            BufferedImage bi = null;
+            try{
+                InputStream in = new ByteArrayInputStream(b);
+                bi = ImageIO.read(in);
+            }
+            catch(IOException ioe){
+            }
             
-            
-            byte[] resizedBytes = resizeForProfile(b, type.substring(type.lastIndexOf("/") + 1, type.length()));
-            
-            
-            
+            byte[] resizedBytes = ImageResizer.resizeToSquare(bi, type.substring(type.lastIndexOf("/") + 1, type.length()), 150);
             
             ByteBuffer buffer = ByteBuffer.wrap(resizedBytes);
             PreparedStatement ps = session.prepare("UPDATE instagrim.userprofiles "
@@ -229,44 +227,7 @@ public class User {
           
      }
     
-    public static byte[] resizeForProfile(byte[] b, String type){
-        InputStream in = new ByteArrayInputStream(b);
-        try{
-            BufferedImage bi = ImageIO.read(in);
-            
-            
-            //1) resize maintaining aspect to make image smaller side equal to squareSide
-            //2) crop from center of the longest side to get AxA square
-           
-            int squareSide = 150;
-            if(bi.getWidth()<bi.getHeight()){
-                 bi = Scalr.resize(bi, Scalr.Method.SPEED,Scalr.Mode.FIT_TO_WIDTH, squareSide,1, OP_ANTIALIAS);//1 is recalculated
-            }
-            else{
-                 bi = Scalr.resize(bi, Scalr.Method.SPEED,Scalr.Mode.FIT_TO_HEIGHT, 1,squareSide, OP_ANTIALIAS);//1 is recalculated
-            }
-            
-            if (bi.getWidth()<bi.getHeight()){
-                bi = Scalr.crop(bi,0,bi.getHeight()/2-squareSide/2,squareSide,squareSide);
-            }
-            else{
-                bi = Scalr.crop(bi,bi.getWidth()/2-squareSide/2,0,squareSide,squareSide);
-            }
-            
-            
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write( bi, type, baos );
-            baos.flush();
-            byte[] imageInByte = baos.toByteArray();
-            baos.close();
-            return imageInByte;
-        }
-        catch(IOException ioe){
-            return null;
-        }
-        
-        
-    }
+    
     
     
     
