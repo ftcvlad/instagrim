@@ -149,7 +149,7 @@ public class PicModel {
                 boundStatement.bind( // here you are binding the 'boundStatement'
                         User));
         if (rs.isExhausted()) {
-            System.out.println("No Images returned");
+            System.out.println("No Images returned 1");
             return null;
         } else {
             for (Row row : rs) {
@@ -188,7 +188,7 @@ public class PicModel {
                             picid));
 
             if (rs.isExhausted()) {
-                System.out.println("No Images returned");
+                System.out.println("No Images returned 2");
                 return null;
             } else {
                 for (Row row : rs) {

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
+import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
@@ -26,7 +27,7 @@ import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
  *
  * @author vladislavvoicehovic
  */
-@WebServlet(name = "ProfilePicture", urlPatterns = {"/Profile/ProfilePicture"})
+@WebServlet(name = "ProfilePicture", urlPatterns = {"/ProfilePicture/*"})
 public class ProfilePicture extends HttpServlet {
 
     private Cluster cluster;
@@ -42,26 +43,34 @@ public class ProfilePicture extends HttpServlet {
             throws ServletException, IOException {
        
         
+            String args[] = Convertors.SplitRequestPath(request);//Instagrim ProfilePicture koza
         
-            HttpSession session = request.getSession();
-            String username = ((LoggedIn) session.getAttribute("LoggedIn")).getUsername();
+        
+//            HttpSession session = request.getSession();
+//            String username = ((LoggedIn) session.getAttribute("LoggedIn")).getUsername();
+
+            String username = args[2];
             User u = new User();
             u.setCluster(cluster);
             ServletContext context = getServletContext();
             Pic profilePic = u.getProfilePicture(username, context);
 
-            ByteBuffer bb = profilePic.getBuffer();
-            byte[] picAsBytes = new byte[bb.remaining()];
-            bb.get(picAsBytes);
-
-           
             
-            response.setContentType(profilePic.getType());
-            response.setContentLength(picAsBytes.length);
+            if (profilePic!=null){//requests to ProfilePicture/* are done by image tags
+                ByteBuffer bb = profilePic.getBuffer();
+                byte[] picAsBytes = new byte[bb.remaining()];
+                bb.get(picAsBytes);
 
-            OutputStream out = response.getOutputStream();
-            out.write(picAsBytes);
-            out.close();
+
+
+                response.setContentType(profilePic.getType());
+                response.setContentLength(picAsBytes.length);
+
+                OutputStream out = response.getOutputStream();
+                out.write(picAsBytes);
+                out.close();
+            }
+            
         
     }
 

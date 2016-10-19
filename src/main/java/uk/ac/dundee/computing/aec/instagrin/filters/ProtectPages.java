@@ -119,8 +119,18 @@ public class ProtectPages implements Filter {
          Throwable problem = null;
         if (session == null || session.getAttribute("LoggedIn")==null){
 
+            
+                if("XMLHttpRequest".equals(httpReq.getHeader("X-Requested-With"))){//ajax requests cannot be redirected usual way
+                    httpResp.setContentType("text/plain");
+                    httpResp.setStatus(401);
+                    httpResp.getWriter().write("Selected file extension is not accepted!");
+                    return;
+                }
+                else{
+                    httpResp.sendRedirect(httpReq.getContextPath()+"/Login");
+                }
              
-                httpResp.sendRedirect(httpReq.getContextPath()+"/Login");
+                
              
              
         }

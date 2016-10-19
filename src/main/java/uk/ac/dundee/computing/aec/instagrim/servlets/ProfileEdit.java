@@ -47,10 +47,10 @@ public class ProfileEdit extends HttpServlet {
             String username = ((LoggedIn) session.getAttribute("LoggedIn")).getUsername();
             User u = new User();
             u.setCluster(cluster);
-            Map<String,String> inputFieldValues = u.getUserInfo(username);
+            Map<String,String> userInfo = u.getUserInfo(username);
           
-           System.out.println("   ========"+inputFieldValues.get("name"));
-            request.setAttribute("inputFieldValues",inputFieldValues);
+           
+            request.setAttribute("userInfo",userInfo);
         
           request.getRequestDispatcher("/WEB-INF/profileEdit.jsp").forward(request, response);
         
@@ -86,6 +86,7 @@ public class ProfileEdit extends HttpServlet {
             inputFieldValues.put("surname", secondname);
             inputFieldValues.put("status", status);
             inputFieldValues.put("email", email);
+            inputFieldValues.put("username", currentUsername);
             request.setAttribute("inputFieldValues", inputFieldValues);
             
             if (!filename.equals("") && !ExtValidator.validate(type, filename)){

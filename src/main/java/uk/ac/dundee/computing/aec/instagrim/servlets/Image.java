@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -18,15 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.IOUtils;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.lib.ExtValidator;
 import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
+import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 
@@ -103,12 +101,22 @@ public class Image extends HttpServlet {
         }
     }
 
-    private void DisplayImageList(String User, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void DisplayImageList(String username, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PicModel tm = new PicModel();
         tm.setCluster(cluster);
-        java.util.LinkedList<Pic> lsPics = tm.getPicsForUser(User);
-        RequestDispatcher rd = request.getRequestDispatcher("/UsersPics.jsp");
+        java.util.LinkedList<Pic> lsPics = tm.getPicsForUser(username);
+        
         request.setAttribute("Pics", lsPics);
+        
+        
+        User u = new User();
+        u.setCluster(cluster);
+        Map<String,String> userInfo = u.getUserInfo(username);
+        request.setAttribute("userInfo", userInfo);
+        
+        System.out.println("ne dumaja");
+        
+        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/UsersPics.jsp");
         rd.forward(request, response);
 
     }
@@ -136,15 +144,17 @@ public class Image extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         for (Part part : request.getParts()) { 
-            System.out.println("Part Name " + part.getName());
+           
 
             String type = part.getContentType();
             String filename = part.getSubmittedFileName();
-            System.out.println(type+" "+filename);
+           
              
             if (!ExtValidator.validate(type, filename)){
-                 request.getRequestDispatcher("/upload.jsp").forward(request, response);
-                 return;
+                response.setContentType("text/plain");
+                response.setStatus(400);
+                response.getWriter().write("Selected file extension is not accepted!");
+                return;
             }
              
             InputStream is = request.getPart(part.getName()).getInputStream();
@@ -169,8 +179,7 @@ public class Image extends HttpServlet {
                 
                 
             }
-            RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
-             rd.forward(request, response);
+
         }
 
     }

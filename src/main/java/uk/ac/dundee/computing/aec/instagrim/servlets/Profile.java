@@ -5,13 +5,20 @@
  */
 package uk.ac.dundee.computing.aec.instagrim.servlets;
 
+import com.datastax.driver.core.Cluster;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
+import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
 /**
  *
@@ -20,7 +27,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ProfileUpload", urlPatterns = {"/Profile/Upload"})
 public class Profile extends HttpServlet {
 
+    private Cluster cluster;
   
+    public void init(ServletConfig config) throws ServletException {
+           // TODO Auto-generated method stub
+           cluster = CassandraHosts.getCluster();
+    }
 
    
     @Override
@@ -28,10 +40,17 @@ public class Profile extends HttpServlet {
             throws ServletException, IOException {
         
         
+        HttpSession session = request.getSession();
+        String username = ((LoggedIn) session.getAttribute("LoggedIn")).getUsername();
+        User u = new User();
+        u.setCluster(cluster);
+        Map<String, String> userInfo = u.getUserInfo(username);
+        
+        request.setAttribute("userInfo", userInfo);
 
-          request.getRequestDispatcher("/WEB-INF/profileUploadImage.jsp").forward(request, response);
-        
-        
+        request.getRequestDispatcher("/WEB-INF/profileUploadImage.jsp").forward(request, response);
+
+
     }
 
   

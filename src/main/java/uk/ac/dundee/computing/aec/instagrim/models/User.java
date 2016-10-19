@@ -97,7 +97,6 @@ public class User {
                 boundStatement.bind( // here you are binding the 'boundStatement'
                         username));
         if (rs.isExhausted()) {
-            System.out.println("No Images returned");//???
             return false;
         } else {
             for (Row row : rs) {
@@ -111,7 +110,6 @@ public class User {
     
     return false;  
     }
-    
     
     public void editUserProfile(byte[] b, String type,String firstName, String secondName, String email, String status, String currentUsername){
         
@@ -143,10 +141,16 @@ public class User {
         
        
         session.execute(bs);
-       
-         
-       
+
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     public Map<String,String> getUserInfo(String username){
@@ -158,22 +162,28 @@ public class User {
         bs.bind(username);
         ResultSet rs = session.execute(bs);        
         
-       
-        Row singleRow = rs.one();
+        if (rs.isExhausted()){
+            return null;
+        }
+        else{
+            Row singleRow = rs.one();
 
-        
-        Map<String,String> map = new HashMap<String,String>();
-        String name = singleRow.getString("first_name");
-        String surname = singleRow.getString("last_name");
-        String email = singleRow.getString("email");
-        String status = singleRow.getString("status");
-        
-        map.put("name", name==null?"":name);
-        map.put("surname",surname==null?"":surname );
-        map.put("email",email==null?"":email );
-        map.put("status",status==null?"":status);
 
-        return map;
+             Map<String,String> map = new HashMap<String,String>();
+             String name = singleRow.getString("first_name");
+             String surname = singleRow.getString("last_name");
+             String email = singleRow.getString("email");
+             String status = singleRow.getString("status");
+
+             map.put("name", name==null?"":name);
+             map.put("surname",surname==null?"":surname );
+             map.put("email",email==null?"":email );
+             map.put("status",status==null?"":status);
+             map.put("username", username);
+             
+             return map;
+        }
+        
             
     }
     
@@ -185,30 +195,36 @@ public class User {
           bs.bind(username);
           
           
-          ResultSet rs = session.execute(bs);        
-          Row singleRow = rs.one();
-          ByteBuffer bImage = singleRow.getBytes("profilePicture");
-          String type = singleRow.getString("picType");
+          ResultSet rs = session.execute(bs);    
           
-          
-          if (bImage==null){
-              type="image/png";//type
-              
-            
-              try {
-                  Path path = Paths.get(context.getRealPath("/static/images/nopic.png"));
-                  byte[] data = Files.readAllBytes(path);
-                  bImage = ByteBuffer.wrap(data);//buffer
-                  
-              } catch (IOException io) {
-                  System.out.println("*****BAD PATH*****");
+          if (!rs.isExhausted()){
+              Row singleRow = rs.one();
+              ByteBuffer bImage = singleRow.getBytes("profilePicture");
+              String type = singleRow.getString("picType");
+
+              if (bImage == null) {
+                  type = "image/png";//type
+
+                  try {
+                      Path path = Paths.get(context.getRealPath("/static/images/nopic.png"));
+                      byte[] data = Files.readAllBytes(path);
+                      bImage = ByteBuffer.wrap(data);//buffer
+
+                  } catch (IOException io) {
+                      System.out.println("*****BAD PATH*****");
+                  }
+
               }
 
+              Pic p = new Pic();
+              p.setPic(bImage, type);
+              return p;
+          }
+          else{
+              return null;
           }
           
-          Pic p = new Pic();
-          p.setPic(bImage,type );
-          return p;
+          
           
           
      }

@@ -17,10 +17,7 @@ and open the template in the editor.
         <url-pattern>/Register</url-pattern>
     </filter-mapping>
 
-    <filter-mapping>
-        <filter-name>ProtectPages</filter-name>
-        <url-pattern>/upload.jsp</url-pattern>
-    </filter-mapping>
+
 
     <filter-mapping>
         <filter-name>ProtectPages</filter-name>

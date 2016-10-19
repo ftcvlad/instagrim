@@ -14,7 +14,23 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
+    <repositories>
+        <repository>
+          <id>localMarvin</id>
+          <url>file://${project.basedir}/src/main/resources/local</url>
+        </repository>
+    </repositories>
+    
+    
     <dependencies>
+     
+<!--        <dependency>
+            <groupId>filters</groupId>
+            <artifactId>marvinMain</artifactId>
+            <version>1.5.8</version>
+        </dependency>-->
+        
+        
         <dependency>
             <groupId>com.datastax.cassandra</groupId>
             <artifactId>cassandra-driver-core</artifactId>
@@ -34,11 +50,6 @@
             <groupId>org.imgscalr</groupId>
             <artifactId>imgscalr-lib</artifactId>
             <version>4.2</version>
-        </dependency>
-        <dependency>
-            <groupId>vlad.filter.image</groupId>
-            <artifactId>marvin</artifactId>
-            <version>1.5.7</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

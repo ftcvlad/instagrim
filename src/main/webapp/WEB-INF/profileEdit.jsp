@@ -29,12 +29,12 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div><img src="${pageContext.request.contextPath}/Profile/ProfilePicture"> </div>
+                            <div><img src="${pageContext.request.contextPath}/ProfilePicture/${userInfo.get("username")}"> </div>
                             
                             <div id="profileInfo">
-                                <h1>${sessionScope.LoggedIn.getUsername()}</h1>
-                                <h2>${inputFieldValues.get("name")} ${inputFieldValues.get("surname")}</h2>
-                                <p>${inputFieldValues.get("status")}</p>
+                                <h1>${userInfo.get("username")}</h1>
+                                <h2>${userInfo.get("name")} ${userInfo.get("surname")}</h2>
+                                <p>${userInfo.get("status")}</p>
                             </div>
                            
                         
@@ -46,17 +46,17 @@
                                
                                 <div class="form-group">
                                      <label for="usernameInput">First name</label>
-                                    <input class="form-control" id="nameInput" name="firstname" value="${inputFieldValues.get("name")}" placeholder="20 characters max" maxlength="20">
+                                    <input class="form-control" id="nameInput" name="firstname" value="${userInfo.get("name")}" placeholder="20 characters max" maxlength="20">
                                 </div>
                                 <div class="form-group">
                                       <label for="usernameInput">Second name</label>
-                                    <input  class="form-control" id="surnameInput" name="lastname" value="${inputFieldValues.get("surname")}" placeholder="20 characters max" maxlength="20">
+                                    <input  class="form-control" id="surnameInput" name="lastname" value="${userInfo.get("surname")}" placeholder="20 characters max" maxlength="20">
                                 </div>
                                
                                 
                                 <div class="form-group">
                                     <label for="emailInput">Email address</label>
-                                    <input type="email" class="form-control" id="emailInput" name="email" aria-describedby="emailHelp" value="${inputFieldValues.get("email")}" placeholder="Enter email">
+                                    <input type="email" class="form-control" id="emailInput" name="email" aria-describedby="emailHelp" value="${userInfo.get("email")}" placeholder="Enter email">
                                 </div>
                                 
                                 
@@ -71,7 +71,7 @@
                                
                                 <div class="form-group">
                                   <label for="exampleTextarea">Status</label>
-                                  <textarea class="form-control" id="exampleTextarea" name="status" rows="2" placeholder="100 max" maxlength="100">${inputFieldValues.get("status")}</textarea>
+                                  <textarea class="form-control" id="exampleTextarea" name="status" rows="2" placeholder="100 max" maxlength="100">${userInfo.get("status")}</textarea>
                                 </div>
                                 <div class="form-group">
                                   <label for="exampleInputFile">Set profile picture</label>
