@@ -40,7 +40,7 @@ public final class Keyspaces {
                     + "      zip int\n"
                     + "  );";
             
-            String CreateComments = "CREATE TYPE if not exists instagrim.comments (\n"
+            String CreateComments = "CREATE TABLE if not exists instagrim.comments (\n"
                     + "      comment text,\n"
                     + "      username text,\n"
                     + "      picid int, \n"
@@ -85,6 +85,16 @@ public final class Keyspaces {
             } catch (Exception et) {
                 System.out.println("Can't create user pic list table " + et);
             }
+            
+            try {
+                SimpleStatement cqlQuery = new SimpleStatement(CreateComments);
+                session.execute(cqlQuery);
+            } catch (Exception et) {
+                System.out.println("Can't create comments table " + et);
+            }
+            
+            
+            
             //System.out.println("" + CreateAddressType);
             try {
                 SimpleStatement cqlQuery = new SimpleStatement(CreateAddressType);

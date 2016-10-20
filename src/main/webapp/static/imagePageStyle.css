@@ -54,3 +54,21 @@ img{
 
 
 }
+
+#commentPane{
+    padding:10px;
+    
+    display:flex;
+    flex-direction:column;
+}
+
+#commentList{
+    background-color: white;
+    flex: 1 1 auto;
+}
+
+
+
+#enterComment{
+    flex:0 0 200px;
+}
