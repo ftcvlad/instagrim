@@ -96,7 +96,7 @@ public class Image extends HttpServlet {
         //Instagrim Image 5096fef0-93b7-11e6-b691-0a0027000003
         switch (command) {
             case 1:
-                DisplayImage(Convertors.DISPLAY_PROCESSED,args[2], response);// returns to img src
+                DisplayImage(Convertors.DISPLAY_IMAGE,args[2], response);// returns to img src
                 break;
             case 2:
                 DisplayImageList(args[2], request, response);//Images create many "img src=\\\thumb"

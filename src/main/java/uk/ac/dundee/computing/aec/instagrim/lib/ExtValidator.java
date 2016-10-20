@@ -15,13 +15,14 @@ public class ExtValidator {
     
     public static boolean validate(String type, String filename){
         
-        type = type.toLowerCase();  
+       
         
-        System.out.println("------------>"+type);
+       
         String[] possibleContentTypes = {"image/jpeg", "image/jpg","image/gif","image/png" };   
         String[] possibleExtensions = {"jpg","png","jpeg","gif"};
         
-        String extension = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
+        type = type.toLowerCase();  
+        String extension = filename.substring(filename.lastIndexOf(".") + 1, filename.length()).toLowerCase();
         
         if (Arrays.asList(possibleContentTypes).contains(type) && Arrays.asList(possibleExtensions).contains(extension)){
             return true;

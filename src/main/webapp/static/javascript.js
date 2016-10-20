@@ -1,5 +1,9 @@
 $(function(){
    
+   
+  
+   
+   
 });
 
 
@@ -10,4 +14,10 @@ function logoutF(){
     });
     
     
+}
+
+function showUser(context){
+   
+    
+    window.location = context+"/Images/"+$('input[name=searchUsername]').val();
 }

@@ -32,12 +32,17 @@
                     </ul>
                   </li>
                 </ul>
-                <form class="navbar-form navbar-left">
+                
+                <div class="navbar-form navbar-left"  >
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control"  placeholder="Search" name="searchUsername">
                   </div>
-                  <button type="submit" class="btn btn-default">Submit</button>
-                </form>
+                  <button type="submit" class="btn btn-default" onclick="showUser('${pageContext.request.contextPath}')">Submit</button>
+                </div>
+                
+               
+                
+                
                 <ul class="nav navbar-nav navbar-right">
                  
                   

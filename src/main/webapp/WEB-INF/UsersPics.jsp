@@ -62,7 +62,7 @@
         
                                         <c:choose>
                                             <c:when test="${lsPics==null}">
-                                                Current user has no pictures
+                                                User has no pictures
                                             </c:when>
                                             <c:otherwise>
                                                 <div class="container-fluid">
@@ -70,7 +70,7 @@
 
                                                             <c:forEach items="${lsPics}" var="nextPic"> 
                                                                  <div class="col-xs-4 col-md-4">
-                                                                     <a href="/Instagrim/Image/${nextPic.getSUUID()}" class="thumbnail"><img src="/Instagrim/Thumb/${nextPic.getSUUID()}" ></a>
+                                                                     <a href="/Instagrim/ShowFullImage/${nextPic.getSUUID()}" class="thumbnail"><img src="/Instagrim/Thumb/${nextPic.getSUUID()}" ></a>
 
                                                                 </div>
 
