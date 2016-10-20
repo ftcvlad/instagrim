@@ -22,10 +22,8 @@ public final class Keyspaces {
                     + " title varchar,"
                     + " image blob,"
                     + " thumb blob,"
-                    + " processed blob,"
                     + " imagelength int,"
                     + " thumblength int,"
-                    + "  processedlength int,"
                     + " type  varchar,"
                     + " name  varchar,"
                     + " PRIMARY KEY (picid)"
@@ -40,6 +38,14 @@ public final class Keyspaces {
                     + "      street text,\n"
                     + "      city text,\n"
                     + "      zip int\n"
+                    + "  );";
+            
+            String CreateComments = "CREATE TYPE if not exists instagrim.comments (\n"
+                    + "      comment text,\n"
+                    + "      username text,\n"
+                    + "      picid int, \n"
+                    + "      pic_added timestamp, \n"
+                    + "      PRIMARY KEY (picid,pic_added)\n"
                     + "  );";
             String CreateUserProfile = "CREATE TABLE if not exists instagrim.userprofiles (\n"
                     + "      login varchar PRIMARY KEY,\n"
