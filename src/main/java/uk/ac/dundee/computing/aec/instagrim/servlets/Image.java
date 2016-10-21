@@ -175,10 +175,8 @@ public class Image extends HttpServlet {
            
             HttpSession session=request.getSession();
             LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
-            String username = null;
-            if (lg!=null){
-                username=lg.getUsername();
-            }
+            String  username=lg.getUsername();
+           
             
             byte[] bytes = IOUtils.toByteArray(is);
             

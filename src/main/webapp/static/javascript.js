@@ -1,7 +1,11 @@
 $(function(){
    
    
-  
+    $('input[name=searchUsername]').on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            window.location = "/Instagrim/Images/"+$('input[name=searchUsername]').val();
+        }
+    });
    
    
 });
@@ -15,6 +19,7 @@ function logoutF(){
     
     
 }
+
 
 function showUser(context){
    

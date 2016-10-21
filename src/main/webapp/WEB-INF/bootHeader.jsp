@@ -37,7 +37,7 @@
                   <div class="form-group">
                     <input type="text" class="form-control"  placeholder="Search" name="searchUsername">
                   </div>
-                  <button type="submit" class="btn btn-default" onclick="showUser('${pageContext.request.contextPath}')">Submit</button>
+                  <button type="submit" class="btn btn-default"  onclick="showUser('${pageContext.request.contextPath}')">Submit</button>
                 </div>
                 
                
@@ -56,14 +56,14 @@
                             String UserName = lg.getUsername();
                           
                     %>
-                <li><a href="/Instagrim/Profile/Upload">Profile</a></li>
-                <li><a href="/Instagrim/Images/<%=lg.getUsername()%>">Your Images</a></li>
+                <li><a href="${pageContext.request.contextPath}/Profile/Upload">Profile</a></li>
+                <li><a href="${pageContext.request.contextPath}/Images/<%=lg.getUsername()%>">Your Images</a></li>
                 <li><a><span onclick="logoutF();">Logout</span></a></li>
                     <%
                             }else{
                                 %>
-                 <li><a href="Register">Register</a></li>
-                <li><a href="Login">Login</a></li>
+                 <li><a href="${pageContext.request.contextPath}/Register">Register</a></li>
+                <li><a href="${pageContext.request.contextPath}/Login">Login</a></li>
                 <%
                                         
                             

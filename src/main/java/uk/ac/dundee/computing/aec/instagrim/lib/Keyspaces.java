@@ -43,9 +43,9 @@ public final class Keyspaces {
             String CreateComments = "CREATE TABLE if not exists instagrim.comments (\n"
                     + "      comment text,\n"
                     + "      username text,\n"
-                    + "      picid int, \n"
+                    + "      picid uuid, \n"
                     + "      pic_added timestamp, \n"
-                    + "      PRIMARY KEY (picid,pic_added)\n"
+                    + "      PRIMARY KEY (picid,pic_added)\n"//default clustering order ASC -- what we need
                     + "  );";
             String CreateUserProfile = "CREATE TABLE if not exists instagrim.userprofiles (\n"
                     + "      login varchar PRIMARY KEY,\n"

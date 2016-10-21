@@ -80,20 +80,21 @@ public class ProfileEdit extends HttpServlet {
             String type = filePart.getContentType();
             String filename = filePart.getSubmittedFileName();
             
-             
-            Map<String,String> inputFieldValues =new HashMap<>();
-            inputFieldValues.put("name", firstname);
-            inputFieldValues.put("surname", secondname);
-            inputFieldValues.put("status", status);
-            inputFieldValues.put("email", email);
-            inputFieldValues.put("username", currentUsername);
-            request.setAttribute("inputFieldValues", inputFieldValues);
-            
             if (!filename.equals("") && !ExtValidator.validate(type, filename)){
                  request.setAttribute("updateSuccess", false); 
                  request.getRequestDispatcher("/WEB-INF/profileEdit.jsp").forward(request, response);
                  return;
             }
+             
+            Map<String,String> userInfo =new HashMap<>();
+            userInfo.put("name", firstname);
+            userInfo.put("surname", secondname);
+            userInfo.put("status", status);
+            userInfo.put("email", email);
+            userInfo.put("username", currentUsername);
+            request.setAttribute("userInfo", userInfo);
+            
+            
             
             
             InputStream is = filePart.getInputStream();

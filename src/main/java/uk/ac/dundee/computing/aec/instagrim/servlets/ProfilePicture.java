@@ -43,11 +43,15 @@ public class ProfilePicture extends HttpServlet {
             throws ServletException, IOException {
        
         
+        
+        
             String args[] = Convertors.SplitRequestPath(request);//Instagrim ProfilePicture koza
         
         
 //            HttpSession session = request.getSession();
 //            String username = ((LoggedIn) session.getAttribute("LoggedIn")).getUsername();
+
+          
 
             String username = args[2];
             User u = new User();

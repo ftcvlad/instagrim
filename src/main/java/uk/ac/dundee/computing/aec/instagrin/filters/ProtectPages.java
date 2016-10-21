@@ -123,7 +123,7 @@ public class ProtectPages implements Filter {
                 if("XMLHttpRequest".equals(httpReq.getHeader("X-Requested-With"))){//ajax requests cannot be redirected usual way
                     httpResp.setContentType("text/plain");
                     httpResp.setStatus(401);
-                    httpResp.getWriter().write("Selected file extension is not accepted!");
+                    httpResp.getWriter().write("Session expired");
                     return;
                 }
                 else{

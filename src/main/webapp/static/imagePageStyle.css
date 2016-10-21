@@ -1,74 +1,96 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 19-Oct-2016, 23:56:56
-    Author     : Vlad
-*/
 
 
 body{
-   
+    width:100%;
+       display: table;
+    position: absolute;
+    height: 100%;
+    
 }
 
 #main{
-   /* padding: 100px 50px 50px 50px;
-/*    display:flex;
-    width:70%;*/
-
- padding-top: 70px;
- padding-bottom:70px;
+    width: 90%;
+   
+    margin:auto;
+    
+    display: table-cell;
+    vertical-align: middle;
 }
 
-.container{
-      
+#firstFlexContainer{
+    display:flex;
+    flex-direction:row;
+    min-height:500px;
+    max-height: calc(100vh - 20px);
+    max-height:  -webkit-calc(100vh - 20px);
+    max-height: -moz-calc(100vh - 20px);
+    
 }
 
-
-.col-md-8{
-    background-color: red;
+#imageDiv{
+    flex:1 1 auto;
+    background-color:#e6e6e6;
+    justify-content:center;
+    display:flex;
+    flex-direction:column;
+    border: 2px solid black;
 }
 
-.col-md-4{
-    background-color: blue;
-}
-
-.row {
-  overflow: hidden; 
-}
-
-[class*="col-"]{
-  margin-bottom: -99999px;
-  padding-bottom: 99999px;
+#imageDiv > div{
+    min-width:0;
+    margin: auto;
 }
 
 img{
-    margin: 0 auto;
-
-    max-height: -o-calc(100vh - 140px); /* opera */
-    max-height: -webkit-calc(100vh - 140px); /* google, safari */
-    max-height: -moz-calc(100vh - 140px); /* firefox */
-    max-height: calc(100vh - 140px);
-
-
+    max-height:  calc(100vh - 20px);
+    max-height:  -webkit-calc(100vh - 20px);
+    max-height: -moz-calc(100vh - 20px);
 }
 
 #commentPane{
-    padding:10px;
-    
-    display:flex;
+    flex: 1 0 200px;
+    border: 2px solid black;
     flex-direction:column;
+    display:flex;
+    padding:10px;
+    max-width: 260px;
+    word-wrap: break-word;
+}
+
+#commentPane ul{
+    list-style-type: none;
+    padding:0;
+}
+
+
+#commentPane ul li{
+    
+    border-bottom: 1px solid #b9aeae;
+    padding: 5px 0 5px 0;
 }
 
 #commentList{
-    background-color: white;
     flex: 1 1 auto;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    border-bottom: 2px solid black;
+}
+
+#enterComment{
+    flex: 0 0 80px;
+    display:flex;
 }
 
 
+#enterComment div:nth-child(1)  {
+    flex: 1 1 auto;
+}
 
-#enterComment{
-    flex:0 0 200px;
+#enterComment div:nth-child(2)  {
+    flex: 0 0 50px;
+}
+
+textarea{
+    resize: none;
+    width:100%;
 }
