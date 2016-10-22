@@ -76,11 +76,7 @@ public class Image extends HttpServlet {
         String args[] = Convertors.SplitRequestPath(request);
        
         
-        for (String s: args){
-            System.out.print(s+" ");
-            
-        }
-        System.out.println();
+      
         int command;
         try {
             command = (Integer) CommandsMap.get(args[1]);
@@ -162,8 +158,6 @@ public class Image extends HttpServlet {
             
             
             if (!ExtValidator.validate(type, filename)){
-                
-                
                 response.setContentType("text/plain");
                 response.setStatus(400);
                 response.getWriter().write("Selected file extension is not accepted!");

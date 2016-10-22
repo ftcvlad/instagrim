@@ -15,10 +15,7 @@
         <%@ include file="headSources.jsp" %>
     </head>
     <body>
-        
-        
-
-        
+              
        
 <div id="main">
     <div id="firstFlexContainer">

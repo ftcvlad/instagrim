@@ -22,12 +22,17 @@ public class ExtValidator {
         String[] possibleExtensions = {"jpg","png","jpeg","gif"};
         
         type = type.toLowerCase();  
-        String extension = filename.substring(filename.lastIndexOf(".") + 1, filename.length()).toLowerCase();
         
-        if (Arrays.asList(possibleContentTypes).contains(type) && Arrays.asList(possibleExtensions).contains(extension)){
-            return true;
+        if (filename.equals("blob")){//name "blob" for blob
+            return Arrays.asList(possibleContentTypes).contains(type);
+            
         }
-        return false;
+        else{
+            String extension = filename.substring(filename.lastIndexOf(".") + 1, filename.length()).toLowerCase();
+        
+            return Arrays.asList(possibleContentTypes).contains(type) && Arrays.asList(possibleExtensions).contains(extension);
+        }
+       
         
     }
     

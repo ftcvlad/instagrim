@@ -12,8 +12,11 @@ function addComment(contextPath, username){
    
     $.post(contextPath+"/Comment/"+targetSUUID ,{comment:commentText} , function(){
             // if not logged in user tries to comment he was redirected to login
-             $("#commentList ul").append('<li><strong>'+username+'</strong> '+commentText+'</li>');
-             $("#enterComment textarea").val('');
+             $("#commentList ul").append('<li><strong><a href="/Instagrim/Images/'+username+'">'+username+'</a></strong> '+commentText+'</li>');
+             
+                            
+        
+        $("#enterComment textarea").val('');
        
         
     }).fail(function(jqXHR, textStatus,errorMessage){

@@ -66,22 +66,34 @@
 
                                             <div class="tab-content ">
                                                         <div class="tab-pane active" id="1">
-                                                                    <button type="button" class="btn btn-primary" onclick="uploadImage('${pageContext.request.contextPath}')">Upload</button>
+                                                                    <button type="button" class="btn btn-primary" onclick="getFileInputAsBlob()">Upload</button>
                                                         </div>
                                                         <div class="tab-pane" id="2">
                                                                 <br/>
                                                                 
                                                                 <div class="radio">
-                                                                    <label><input type="radio" name="filterName" value="original">Original</label>
+                                                                    <label><input type="radio" name="filterName" value="grayscale">GrayScale</label>
                                                                 </div>
                                                                 <div class="radio" >
                                                                     <label><input type="radio" name="filterName" checked="checked" value="sepia">Sepia</label>
                                                                 </div>
+                                                                <div class="radio" >
+                                                                    <label><input type="radio" name="filterName" checked="checked" value="negative">Negative</label>
+                                                                </div>
+                                                                <div class="radio" >
+                                                                    <label><input type="radio" name="filterName" checked="checked" value="2">2</label>
+                                                                </div>
+                                                                <div class="radio" >
+                                                                    <label><input type="radio" name="filterName" checked="checked" value="3">3</label>
+                                                                </div>
 
-                                                                <button type="button" class="btn btn-primary" onclick="sendTofilter('${pageContext.request.contextPath}')">View image</button>
+                                                                <button type="button" class="btn btn-primary" onclick="sendTofilter('${pageContext.request.contextPath}')">Apply filter</button>
                                                                 <br/>
 
-                                                                <div id="appendImage"></div>    
+                                                                <div id="appendImage">
+                                                                    
+                                                                    
+                                                                </div>    
                                                         </div>
 
                                             </div>
