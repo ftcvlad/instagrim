@@ -44,19 +44,7 @@ public class ImageFilter extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        System.out.println("jojgogog");
-        // System.out.println("&&& "+PathChecker.checkPath());
-//            HttpSession session=request.getSession();
-//            byte[] filteredImage = (byte[])session.getAttribute("filteredImage");
-//            
-//            response.setContentType((String)session.getAttribute("filteredImageType"));
-//            response.setContentLength(filteredImage.length);
-//
-//            OutputStream out = response.getOutputStream();
-//            out.write(filteredImage);
-//            out.close();
-       
+
            
            
     }
@@ -116,9 +104,7 @@ public class ImageFilter extends HttpServlet {
             else if(pathParts[2].equals("2")){
                 bi = two(bi);
             }
-            else if(pathParts[2].equals("3")){
-                bi = three(bi);
-            }
+         
            
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -241,15 +227,7 @@ public class ImageFilter extends HttpServlet {
         return gray;
     }
   
-      public static BufferedImage three(BufferedImage master) {
-        BufferedImage gray = new BufferedImage(master.getWidth(), master.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-        // Automatic converstion....
-        ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB), null);
-        op.filter(master, gray);
-
-        return gray;
-    }
+  
   
     /**
      * Returns a short description of the servlet.

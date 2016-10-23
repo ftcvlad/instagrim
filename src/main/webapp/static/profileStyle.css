@@ -43,6 +43,22 @@ html,body,#main{
 .panel-heading{
     display:flex;
     flex: 0 0 auto;
+    flex-direction:column;
+}
+
+#headContent{
+    display:flex;
+    flex: 1 1 auto;
+}
+#followersContent{
+    flex: 0 0 auto;
+    border-top: 1px solid #a23a3a;
+    font-weight: bold;
+    font-family: cursive;
+    padding: 10px 0 0 0;
+}
+#followersContent p{
+    margin:0;
 }
 
 .panel-body{
@@ -95,6 +111,3 @@ html,body,#main{
     padding-top:20px;
 }
 
-#2 button{
-    margin-right:20px;
-}

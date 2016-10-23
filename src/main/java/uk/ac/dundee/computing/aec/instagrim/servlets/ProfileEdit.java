@@ -70,7 +70,7 @@ public class ProfileEdit extends HttpServlet {
            
             String email =request.getParameter("email");
             String status =request.getParameter("status");
-            HttpSession session=request.getSession();
+            HttpSession session=request.getSession(false);
             String currentUsername = ((LoggedIn)session.getAttribute("LoggedIn")).getUsername();
             
             //http://stackoverflow.com/questions/2422468/how-to-upload-files-to-server-using-jsp-servlet/2424824#2424824

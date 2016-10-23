@@ -7,6 +7,10 @@ and open the template in the editor.
 
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                       http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
+
+    
+
+    
     <filter-mapping>
         <filter-name>ProtectRegisterLogin</filter-name>
         <url-pattern>/Login</url-pattern>
@@ -37,6 +41,11 @@ and open the template in the editor.
     <filter-mapping>
         <filter-name>ProtectPages</filter-name>
         <url-pattern>/Image</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>ProtectPages</filter-name>
+        <url-pattern>/FollowUnfollow/*</url-pattern>
     </filter-mapping>
 
 

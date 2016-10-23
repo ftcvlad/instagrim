@@ -29,13 +29,20 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div><img src="${pageContext.request.contextPath}/ProfilePicture/${userInfo.get("username")}"> </div>
-                            
-                            <div id="profileInfo">
-                                <h1>${userInfo.get("username")}</h1>
-                                <h2>${userInfo.get("name")} ${userInfo.get("surname")}</h2>
-                                <p>${userInfo.get("status")}</p>
+                             <div id="headContent">
+                                <div><img src="${pageContext.request.contextPath}/ProfilePicture/${userInfo.get("username")}"> </div>
+
+                                <div id="profileInfo">
+                                    <h1>${userInfo.get("username")}</h1>
+                                    <h2>${userInfo.get("name")} ${userInfo.get("surname")}</h2>
+                                    <p>${userInfo.get("status")}</p>
+                                    
+                                </div>
+                                
                             </div>
+                            <div id="followersContent">
+                                <p>Following:${userInfo.get("following")} Followers: ${userInfo.get("followers")} </p>
+                            </div>    
                            
                         
                         

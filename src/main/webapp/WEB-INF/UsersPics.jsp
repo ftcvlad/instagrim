@@ -16,6 +16,7 @@
          <link rel="stylesheet" type="text/css" href="../static/Styles.css" />
         <link rel="stylesheet" type="text/css" href="../static/profileStyle.css" />
         <link rel="stylesheet" type="text/css" href="../static/viewThumbnails.css" />
+        <script src="../static/thumbnailsScript.js"></script>
         <script src="../static/javascript.js"></script>
     </head>
     <body>
@@ -43,13 +44,42 @@
                                 <div class="panel panel-default">
 
                                     <div class="panel-heading">
-                                        <div><img src="${pageContext.request.contextPath}/ProfilePicture/${userInfo.get("username")}"> </div>
+                                        <div id="headContent">
+                                            <div><img src="${pageContext.request.contextPath}/ProfilePicture/${userInfo.get("username")}"> </div>
 
-                                        <div id="profileInfo">
-                                            <h1>${userInfo.get("username")}</h1>
-                                            <h2>${userInfo.get("name")} ${userInfo.get("surname")}</h2>
-                                            <p>${userInfo.get("status")}</p>
+                                            <div id="profileInfo">
+                                                <h1>${userInfo.get("username")}</h1>
+                                                <h2>${userInfo.get("name")} ${userInfo.get("surname")}</h2>
+                                                <p>${userInfo.get("status")}</p>
+
+                                            </div>
+
                                         </div>
+                                        <div id="followersContent">
+                                            <div>
+                                                <p>Following:<span>${userInfo.get("following")}</span> Followers: <span>${userInfo.get("followers")}</span> </p>
+                                            </div>
+                                            
+                                            <c:if test = "${ viewingUser!=null && userInfo.get('username') != viewingUser}">
+                                                <c:choose>
+                                                    <c:when test="${alreadyFollowing==false}">
+                                                        <div id="followDiv">
+                                                            <button type="button" class="btn btn-primary btn-sm" onclick="follow('${userInfo.get('username')}')">Follow</button>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <div id="followDiv">
+                                                            <button type="button" class="btn btn-primary btn-sm" id="redUnfollow" onclick="unfollow('${userInfo.get('username')}')">Unfollow</button>
+                                                        </div>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:if>
+
+                                        </div>    
+
+           
+                                     
+                                     
 
 
 

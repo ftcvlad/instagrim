@@ -47,6 +47,24 @@ public final class Keyspaces {
                     + "      pic_added timestamp, \n"
                     + "      PRIMARY KEY (picid,pic_added)\n"//default clustering order ASC -- what we need
                     + "  );";
+            
+            
+            String CreateFollowers = "CREATE TABLE if not exists instagrim.followers (\n"
+                    + "      username text,\n"
+                    + "      followedUser text, \n"
+                    + "      PRIMARY KEY (username,followedUser)\n"
+                    + "  );";
+            
+            //can't increment non-counters, and can't have counters and non-part-of-composite-key columns in the same table :(
+             String profileFollowCounters = "CREATE TABLE if not exists instagrim.follow_counts (\n"
+                    + "      login varchar,\n"
+                    + "      following counter,\n"
+                    + "      followers counter,\n"
+                    + "      PRIMARY KEY (login)\n"
+                    + "  );";
+            
+   
+            
             String CreateUserProfile = "CREATE TABLE if not exists instagrim.userprofiles (\n"
                     + "      login varchar PRIMARY KEY,\n"
                     + "      password varchar,\n"
@@ -94,6 +112,21 @@ public final class Keyspaces {
             }
             
             
+            try {
+                SimpleStatement cqlQuery = new SimpleStatement(CreateFollowers);
+                session.execute(cqlQuery);
+            } catch (Exception et) {
+                System.out.println("Can't create followers table " + et);
+            }
+            
+            
+             try {
+                SimpleStatement cqlQuery = new SimpleStatement(profileFollowCounters);
+                session.execute(cqlQuery);
+            } catch (Exception et) {
+                System.out.println("Can't create followers table " + et);
+            }
+            
             
             //System.out.println("" + CreateAddressType);
             try {
@@ -108,7 +141,7 @@ public final class Keyspaces {
                 session.execute(cqlQuery);
                 System.out.println("USERORfiles is created!");
             } catch (Exception et) {
-                System.out.println("Can't create Address Profile " + et);
+                System.out.println("Can't create UserProfile " + et);
             }
             session.close();
 

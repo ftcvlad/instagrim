@@ -26,6 +26,7 @@ import java.util.Map;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import uk.ac.dundee.computing.aec.instagrim.lib.AeSimpleSHA1;
@@ -179,6 +180,14 @@ public class User {
              map.put("status",status==null?"":status);
              map.put("username", username);
              
+           
+             FollowersModel fm = new FollowersModel();
+             fm.setCluster(cluster);
+             long[] counts =  fm.countFollowFollowers(username);
+             
+             map.put("following", counts[0]+"");
+             map.put("followers", counts[1]+"");
+             
              return map;
         }
         
@@ -221,10 +230,7 @@ public class User {
           else{
               return null;
           }
-          
-          
-          
-          
+
      }
     
     

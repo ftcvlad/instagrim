@@ -29,18 +29,34 @@
                     </div>
 
                     <div class="panel panel-default">
+                        
                         <div class="panel-heading">
-                            <div><img src="${pageContext.request.contextPath}/ProfilePicture/${userInfo.get("username")}"> </div>
                             
-                            <div id="profileInfo">
-                                <h1>${userInfo.get("username")}</h1>
-                                <h2>${userInfo.get("name")} ${userInfo.get("surname")}</h2>
-                                <p>${userInfo.get("status")}</p>
+                            <div id="headContent">
+                                <div><img src="${pageContext.request.contextPath}/ProfilePicture/${userInfo.get("username")}"> </div>
+
+                                <div id="profileInfo">
+                                    <h1>${userInfo.get("username")}</h1>
+                                    <h2>${userInfo.get("name")} ${userInfo.get("surname")}</h2>
+                                    <p>${userInfo.get("status")}</p>
+                                    
+                                </div>
+                                
                             </div>
-                        
-                        
-                        </div>
+                            <div id="followersContent">
+                                <p>Following:${userInfo.get("following")} Followers: ${userInfo.get("followers")} </p>
+                            </div>    
                             
+                                
+
+
+                          
+
+                          
+                        </div>
+
+                        
+                       
                         <div class="panel-body">
                             
 
@@ -66,7 +82,7 @@
 
                                             <div class="tab-content ">
                                                         <div class="tab-pane active" id="1">
-                                                                    <button type="button" class="btn btn-primary" onclick="getFileInputAsBlob()">Upload</button>
+                                                                    <button type="button" style="margin-top:20px" class="btn btn-primary" onclick="getFileInputAsBlob()">Upload</button>
                                                         </div>
                                                         <div class="tab-pane" id="2">
                                                                 <br/>
@@ -78,16 +94,14 @@
                                                                     <label><input type="radio" name="filterName" checked="checked" value="sepia">Sepia</label>
                                                                 </div>
                                                                 <div class="radio" >
-                                                                    <label><input type="radio" name="filterName" checked="checked" value="negative">Negative</label>
+                                                                    <label><input type="radio" name="filterName"  value="negative">Negative</label>
                                                                 </div>
                                                                 <div class="radio" >
-                                                                    <label><input type="radio" name="filterName" checked="checked" value="2">2</label>
+                                                                    <label><input type="radio" name="filterName"  value="2">Zzzz</label>
                                                                 </div>
-                                                                <div class="radio" >
-                                                                    <label><input type="radio" name="filterName" checked="checked" value="3">3</label>
-                                                                </div>
+                                                               
 
-                                                                <button type="button" class="btn btn-primary" onclick="sendTofilter('${pageContext.request.contextPath}')">Apply filter</button>
+                                                                <button type="button" style="margin-right:20px;" class="btn btn-primary" onclick="sendTofilter('${pageContext.request.contextPath}')">Apply filter</button>
                                                                 <br/>
 
                                                                 <div id="appendImage">

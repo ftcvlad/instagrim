@@ -3,3 +3,26 @@
     max-height: 300px;
     overflow: auto;
 }
+
+
+/*.panel-heading > div{
+    flex: 0 0 150px;
+}*/
+
+#profileInfo{
+    flex: 1 1 auto;
+    overflow-wrap: break-word;
+}
+
+
+
+#followersContent{
+    display:flex;
+}
+#followersContent div:first-child{
+    flex: 1 1 auto;
+}
+
+#followDiv{
+    flex: 0 0 70px;
+}

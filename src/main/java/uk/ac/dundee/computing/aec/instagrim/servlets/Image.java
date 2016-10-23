@@ -23,6 +23,7 @@ import org.apache.commons.io.IOUtils;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.lib.Convertors;
 import uk.ac.dundee.computing.aec.instagrim.lib.ExtValidator;
+import uk.ac.dundee.computing.aec.instagrim.models.FollowersModel;
 import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
@@ -112,13 +113,31 @@ public class Image extends HttpServlet {
         
         request.setAttribute("Pics", lsPics);
         
+        //here can be logged in or not
+        HttpSession session=request.getSession(false);
+        String viewingUser = null;
+        if (session!=null && session.getAttribute("LoggedIn")!=null ){
+            LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
+            viewingUser = lg.getUsername();
+        }
         
+        //for displayed user
         User u = new User();
         u.setCluster(cluster);
         Map<String,String> userInfo = u.getUserInfo(username);
         request.setAttribute("userInfo", userInfo);
         
-        System.out.println("ne dumaja SUKA");
+        //for viewing user
+        request.setAttribute("viewingUser",viewingUser);
+        
+        if (viewingUser!=null && !viewingUser.equals(username)){
+            FollowersModel fm = new FollowersModel();
+            fm.setCluster(cluster);
+            boolean alreadyFollowing = fm.checkIfFollowing(viewingUser,username);
+          
+            request.setAttribute("alreadyFollowing",alreadyFollowing);
+        }
+        
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/UsersPics.jsp");
         rd.forward(request, response);
