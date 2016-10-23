@@ -110,6 +110,8 @@ public class ProtectPages implements Filter {
             log("ProtectPages:doFilter()");
         }
         
+        
+       
         doBeforeProcessing(request, response);
         
         HttpServletRequest httpReq = (HttpServletRequest) request;

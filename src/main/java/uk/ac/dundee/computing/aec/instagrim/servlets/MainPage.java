@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.FollowersModel;
-import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
 /**
@@ -46,6 +45,7 @@ public class MainPage extends HttpServlet {
         
         HttpSession session = request.getSession(false);
         if (session!=null && session.getAttribute("LoggedIn")!=null){
+            
             String currentUsername = ((LoggedIn)session.getAttribute("LoggedIn")).getUsername();
             
             
@@ -55,6 +55,7 @@ public class MainPage extends HttpServlet {
             
             request.setAttribute("followed",followed);
         }
+      
         
         
         
